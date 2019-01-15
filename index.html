@@ -235,6 +235,12 @@ document.addEventListener('touchend', function(e){
   e.preventDefault();
 }, false)
 
+document.addEventListener('touchmove', function(e){
+  var touchobj = e.changedTouches[0] // reference first touch point for this event
+        var dist = parseInt(touchobj.clientX) - startx
+        e.preventDefault()
+}, false)
+
 // listen to keyboard events to move the snake
 document.addEventListener('keydown', function(e) {
   // prevent snake from backtracking on itself by checking that it's
