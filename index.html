@@ -207,72 +207,117 @@ function loop() {
 
 // listen to touch events to move stake
 
-document.addEventListener('touchstart', function(e){
-  var touchobj = e.changedTouches[0] // reference first touch point
-  Start_X = parseInt(touchobj.clientX) // get touch point's X position.
-  Start_Y = parseInt(touchobj.clientY)
-  e.preventDefault();
+window.addEventListener('load', function(){
+ 
+ var box1 = document.getElementById('game')
+ var startx = 0
+ var starty = 0
+ var endx = 0
+ var endy = 0
+ var dist = 0
+
+ box1.addEventListener('touchstart', function(e){
+     var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
+     startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
+     starty = parseInt(touchobj.clientY)
+     e.preventDefault()
+ }, false)
+
+ box1.addEventListener('touchmove', function(e){
+     var touchobj = e.changedTouches[0] // reference first touch point for this event
+     var dist = parseInt(touchobj.clientX) - startx
+     e.preventDefault()
+ }, false)
+
+ box1.addEventListener('touchend', function(e){
+     var touchobj = e.changedTouches[0] // reference first touch point for this event
+
+     if(endx > startx){ // Right
+      snake.dx = grid;
+      snake.dy = 0;
+    }else if (endx < startx){ // Left
+      snake.dx = -grid;
+      snake.dy = 0;
+    }else if(endy > starty){ // Down
+      snake.dy = grid;
+      snake.dx = 0;
+    }else if (endy < starty){ // Up
+      snake.dy = -grid;
+      snake.dx = 0;
+    }
+
+     e.preventDefault()
+ }, false)
+
 }, false)
 
-document.addEventListener('touchend', function(e){
-  var touchobj = e.changedTouches[0] // reference first touch point
+/*
+  document.addEventListener('touchstart', function(e){
+    var touchobj = e.changedTouches[0] // reference first touch point
+    Start_X = parseInt(touchobj.clientX) // get touch point's X position.
+    Start_Y = parseInt(touchobj.clientY)
+    e.preventDefault();
+  }, false)
 
-  End_X = parseInt(touchobj.clientX) // get touch point's X position.
-  End_Y = parseInt(touchobj.clientY)
+  document.addEventListener('touchend', function(e){
+    var touchobj = e.changedTouches[0] // reference first touch point
 
-  // Figure out what direction to move in                 ------------------TOUCH CONTROLS-------------------
-  if(End_X > Start_X){ // Right
-    snake.dx = grid;
-    snake.dy = 0;
-  }else if (End_X < Start_X){ // Left
-    snake.dx = -grid;
-    snake.dy = 0;
-  }else if(End_Y > Start_Y){ // Down
-    snake.dy = grid;
-    snake.dx = 0;
-  }else if (End_Y < Start_Y){ // Up
-    snake.dy = -grid;
-    snake.dx = 0;
-  }
+    End_X = parseInt(touchobj.clientX) // get touch point's X position.
+    End_Y = parseInt(touchobj.clientY)
 
-  e.preventDefault();
-}, false)
+    // Figure out what direction to move in                 ------------------TOUCH CONTROLS-------------------
+    if(End_X > Start_X){ // Right
+      snake.dx = grid;
+      snake.dy = 0;
+    }else if (End_X < Start_X){ // Left
+      snake.dx = -grid;
+      snake.dy = 0;
+    }else if(End_Y > Start_Y){ // Down
+      snake.dy = grid;
+      snake.dx = 0;
+    }else if (End_Y < Start_Y){ // Up
+      snake.dy = -grid;
+      snake.dx = 0;
+    }
 
-document.addEventListener('touchmove', function(e){
-  var touchobj = e.changedTouches[0] // reference first touch point for this event
+    e.preventDefault();
+  }, false)
+
+  document.addEventListener('touchmove', function(e){
+    var touchobj = e.changedTouches[0] // reference first touch point for this event
         var dist = parseInt(touchobj.clientX) - startx
         e.preventDefault()
-}, false)
+  }, false)*/
+
 
 // listen to keyboard events to move the snake
 document.addEventListener('keydown', function(e) {
-  // prevent snake from backtracking on itself by checking that it's
-  // not already moving on the same axis (pressing left while moving
-  // left won't do anything, and pressing right while moving left
-  // shouldn't let you collide with your own body)
+    // prevent snake from backtracking on itself by checking that it's
+    // not already moving on the same axis (pressing left while moving
+    // left won't do anything, and pressing right while moving left
+    // shouldn't let you collide with your own body)
 
-  // left arrow key
-  if (e.which === 37 && snake.dx === 0) {
-    snake.dx = -grid;
-    snake.dy = 0;
-  }
-  // up arrow key
-  else if (e.which === 38 && snake.dy === 0) {
-    snake.dy = -grid;
-    snake.dx = 0;
-  }
-  // right arrow key
-  else if (e.which === 39 && snake.dx === 0) {
-    snake.dx = grid;
-    snake.dy = 0;
-  }
-  // down arrow key
-  else if (e.which === 40 && snake.dy === 0) {
-    snake.dy = grid;
-    snake.dx = 0;
-  }
-});
-
+    // left arrow key
+    if (e.which === 37 && snake.dx === 0) {
+      snake.dx = -grid;
+      snake.dy = 0;
+    }
+    // up arrow key
+    else if (e.which === 38 && snake.dy === 0) {
+      snake.dy = -grid;
+      snake.dx = 0;
+    }
+    // right arrow key
+    else if (e.which === 39 && snake.dx === 0) {
+      snake.dx = grid;
+      snake.dy = 0;
+    }
+    // down arrow key
+    else if (e.which === 40 && snake.dy === 0) {
+      snake.dy = grid;
+      snake.dx = 0;
+    }
+  });
 
 // start the game
 requestAnimationFrame(loop);
