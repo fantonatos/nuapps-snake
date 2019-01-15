@@ -31,6 +31,7 @@
 <body>
 <canvas width="800" height="800" id="game"></canvas>
 <script>
+disableScroll();
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 var grid = 32;//has to divide size of canvas without remainder
@@ -263,6 +264,16 @@ document.addEventListener('keydown', function(e) {
     snake.dx = 0;
   }
 });
+
+function disableScroll() {
+  if (window.addEventListener) // older FF
+      window.addEventListener('DOMMouseScroll', preventDefault, false);
+  window.onwheel = preventDefault; // modern standard
+  window.onmousewheel = document.onmousewheel = preventDefault; // older browsers, IE
+  window.ontouchmove  = preventDefault; // mobile
+  document.onkeydown  = preventDefaultForScrollKeys;
+}
+
 // start the game
 requestAnimationFrame(loop);
 </script>
