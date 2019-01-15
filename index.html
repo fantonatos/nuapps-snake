@@ -3,6 +3,9 @@
 <head>
   <title></title>
   <style type="text/css">
+  *{
+    touch-action: none;
+  }
   body{
     animation: change 15s infinite;
   }
@@ -31,7 +34,6 @@
 <body>
 <canvas width="800" height="800" id="game"></canvas>
 <script>
-  window.blockMenuHeaderScroll = true;
 var canvas = document.getElementById('game');
 var context = canvas.getContext('2d');
 var grid = 32;//has to divide size of canvas without remainder
