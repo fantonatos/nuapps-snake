@@ -251,46 +251,7 @@ window.addEventListener('load', function(){
 
 }, false)
 
-/*
-  document.addEventListener('touchstart', function(e){
-    var touchobj = e.changedTouches[0] // reference first touch point
-    Start_X = parseInt(touchobj.clientX) // get touch point's X position.
-    Start_Y = parseInt(touchobj.clientY)
-    e.preventDefault();
-  }, false)
-
-  document.addEventListener('touchend', function(e){
-    var touchobj = e.changedTouches[0] // reference first touch point
-
-    End_X = parseInt(touchobj.clientX) // get touch point's X position.
-    End_Y = parseInt(touchobj.clientY)
-
-    // Figure out what direction to move in                 ------------------TOUCH CONTROLS-------------------
-    if(End_X > Start_X){ // Right
-      snake.dx = grid;
-      snake.dy = 0;
-    }else if (End_X < Start_X){ // Left
-      snake.dx = -grid;
-      snake.dy = 0;
-    }else if(End_Y > Start_Y){ // Down
-      snake.dy = grid;
-      snake.dx = 0;
-    }else if (End_Y < Start_Y){ // Up
-      snake.dy = -grid;
-      snake.dx = 0;
-    }
-
-    e.preventDefault();
-  }, false)
-
-  document.addEventListener('touchmove', function(e){
-    var touchobj = e.changedTouches[0] // reference first touch point for this event
-        var dist = parseInt(touchobj.clientX) - startx
-        e.preventDefault()
-  }, false)*/
-
-
-// listen to keyboard events to move the snake
+// Listen to keyboard events to move the snake
 document.addEventListener('keydown', function(e) {
     // prevent snake from backtracking on itself by checking that it's
     // not already moving on the same axis (pressing left while moving
