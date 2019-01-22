@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title>Snake 1.0.0.0</title>
     <style type="text/css">
       *{
         touch-action: none;
@@ -211,7 +211,8 @@
 
     document.addEventListener('load', function(e) {
       // Implement code for touch controls
-      var ti = new Hammer(canvas);
+      var element = document.getElementById('game');
+      var ti = new Hammer(element);
 
       // Instruct Hammer to support all directions
       // Device should also stop scrolling
@@ -219,7 +220,7 @@
         direction: Hammer.DIRECTION_ALL });
 
       // Handle Hammer.JS Events now:
-      ti.on("panleft panright panup pandown", function(ev){
+      ti.on('panleft panright panup pandown', function(ev){
         // Touch event logic goes here
         switch(ev.type){
           case 'panleft':
