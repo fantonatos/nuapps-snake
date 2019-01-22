@@ -232,7 +232,33 @@ window.addEventListener('load', function(){
  box1.addEventListener('touchend', function(e){
      var touchobj = e.changedTouches[0] // reference first touch point for this event
 
-     if(endx > startx){ // Right
+
+    // Process the swipe motion
+    // Determine the difference between the start and end pos, for each axis
+
+    var difX = endx - startx;
+    var difY = endy - starty;
+    
+    if(Math.abs(difX) > Math.abs(difY)){  // Swipe is on the X axis
+      if(difX > 0){ // Go right
+        snake.dx = grid;
+        snake.dy = 0;
+      }else if(difY < 0){ // Go left
+        snake.dx = -grid;
+        snake.dy = 0;
+      }
+    }else if(Math.abs(difY) > Math.abs(difX)){  // Swipt is on the Y axis
+      if(difY > 0){ // Go down
+        snake.dy = grid;
+        snake.dx = 0;
+      }else if(difY < 0){ // Go Up
+        snake.dy = -grid;
+        snake.dx = 0;
+      }
+    }
+
+    /*
+    if(endx > startx){ // Right
       snake.dx = grid;
       snake.dy = 0;
     }else if (endx < startx){ // Left
@@ -244,7 +270,7 @@ window.addEventListener('load', function(){
     }else if (endy < starty){ // Up
       snake.dy = -grid;
       snake.dx = 0;
-    }
+    }*/
 
      e.preventDefault()
  }, false)
@@ -257,7 +283,7 @@ document.addEventListener('keydown', function(e) {
     // not already moving on the same axis (pressing left while moving
     // left won't do anything, and pressing right while moving left
     // shouldn't let you collide with your own body)
-
+    
     // left arrow key
     if (e.which === 37 && snake.dx === 0) {
       snake.dx = -grid;
