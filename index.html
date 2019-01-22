@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Snake 1.0.0.0</title>
+    <title>Snake 1.0.0.1</title>
     <style type="text/css">
       *{
         touch-action: none;
@@ -30,9 +30,14 @@
         background-size: cover;
       }
     </style>
+
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+
   </head>
 <body>
-  <canvas width="800" height="800" id="game"></canvas>
+  <div id="touchArea">
+    <canvas width="800" height="800" id="game"></canvas>
+  </div>
 
   <!-- Implement Hammer.JS for use in touch controls -->
   <script scr="https://hammerjs.github.io/dist/hammer.js"></script>
@@ -211,7 +216,7 @@
 
     document.addEventListener('load', function(e) {
       // Implement code for touch controls
-      var element = document.getElementById('game');
+      var element = document.getElementById('touchArea');
       var ti = new Hammer(element);
 
       // Instruct Hammer to support all directions
