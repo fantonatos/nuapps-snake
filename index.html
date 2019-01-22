@@ -239,7 +239,7 @@ window.addEventListener('load', function(){
     var difX = endx - startx;
     var difY = endy - starty;
     
-    if(Math.abs(difX) > Math.abs(difY)){  // Swipe is on the X axis
+    if(Math.abs(difX) > Math.abs(difY) && snake.dx === 0){  // Swipe is on the X axis
       if(difX > 0){ // Go right
         snake.dx = grid;
         snake.dy = 0;
@@ -250,7 +250,7 @@ window.addEventListener('load', function(){
       }
     }
 
-    if(Math.abs(difY) > Math.abs(difX)){  // Swipt is on the Y axis
+    if(Math.abs(difY) > Math.abs(difX) && snake.dy === 0){  // Swipt is on the Y axis
       if(difY > 0){ // Go down
         snake.dy = grid;
         snake.dx = 0;
