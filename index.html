@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Snake 1.0.0.2</title>
+    <title>Snake 1.0.0.4</title>
     <style type="text/css">
       *{
         touch-action: none;
@@ -32,14 +32,49 @@
     </style>
   </head>
 <body>
-  <div id="touchArea">
+  <div id="touch-interface">
     <canvas width="800" height="800" id="game"></canvas>
   </div>
 
   <!-- Implement Hammer.JS for use in touch controls -->
-  <script scr="https://hammerjs.github.io/dist/hammer.js"></script>
-
+  <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
   <script>
+    var div_element = document.getElementById('touch-interface');
+
+    var touch_interface = new Hammer.Manager(div_element);
+
+    touch_interface.add(new Hammer.Pan({
+        event: 'pan'
+    }) );
+    
+    touch_interface.get('pan').set({ threshold: 50, direction: Hammer.DIRECTION_ALL });
+
+    touch_interface.on('panend', function(ev){
+        var direct = ev.direction;
+        // left swipe
+        if (ev.direction === 2 && snake.dx === 0) {
+          snake.dx = -grid;
+          snake.dy = 0;
+        }
+        // up swipe
+        else if (ev.direction === 8 && snake.dy === 0) {
+          snake.dy = -grid;
+          snake.dx = 0;
+        }
+        // right swipe
+        else if (ev.direction === 4 && snake.dx === 0) {
+          snake.dx = grid;
+          snake.dy = 0;
+        }
+        // down swipe
+        else if (ev.direction === 16 && snake.dy === 0) {
+          snake.dy = grid;
+          snake.dx = 0;
+        }
+        //alert('You did a ' + direct);
+    });
+    // END OF TOUCH SCREEN CONTROLS
+
     var canvas = document.getElementById('game');
     var context = canvas.getContext('2d');
     var grid = 32;//has to divide size of canvas without remainder
@@ -141,15 +176,6 @@
         context.fillRect(apple.x, apple.y, grid-1, grid-1);
       });
 
-    /*
-      // draw apple
-      context.fillStyle = 'white';
-      context.fillRect(apple.x, apple.y, grid-1, grid-1);
-
-      // draw apple2
-      context.fillStyle = 'white';
-      context.fillRect(apple2.x, apple2.y, grid-1, grid-1);
-    */
       // draw snake one cell at a time
       context.fillStyle = '#67bbff';
       snake.cells.forEach(function(cell, index) {
@@ -210,43 +236,7 @@
         }
       });
     }
-
-    document.addEventListener('load', function(e) {
-      // Implement code for touch controls
-      var element = document.getElementById('touchArea');
-      var ti = new Hammer(element);
-
-      // Instruct Hammer to support all directions
-      // Device should also stop scrolling
-      ti.get('pan').set({
-        direction: Hammer.DIRECTION_ALL });
-
-      // Handle Hammer.JS Events now:
-      ti.on('panleft panright panup pandown', function(ev){
-        // Touch event logic goes here
-        switch(ev.type){
-          case 'panleft':
-            snake.dx = -grid;
-            snake.dy = 0;
-            break;
-
-          case 'panright':
-            snake.dx = grid;
-            snake.dy = 0;
-            break;
-
-          case 'panup':
-            snake.dy = -grid;
-            snake.dx = 0;
-            break;
-
-          case 'pandown':
-            snake.dy = grid;
-            snake.dx = 0;
-            break;
-        }
-      });
-    });
+      
     
 
 
