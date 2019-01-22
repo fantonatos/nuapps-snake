@@ -243,15 +243,19 @@ window.addEventListener('load', function(){
       if(difX > 0){ // Go right
         snake.dx = grid;
         snake.dy = 0;
-      }else if(difY < 0){ // Go left
+      }
+      if(difY < 0){ // Go left
         snake.dx = -grid;
         snake.dy = 0;
       }
-    }else if(Math.abs(difY) > Math.abs(difX)){  // Swipt is on the Y axis
+    }
+
+    if(Math.abs(difY) > Math.abs(difX)){  // Swipt is on the Y axis
       if(difY > 0){ // Go down
         snake.dy = grid;
         snake.dx = 0;
-      }else if(difY < 0){ // Go Up
+      }
+      if(difY < 0){ // Go Up
         snake.dy = -grid;
         snake.dx = 0;
       }
