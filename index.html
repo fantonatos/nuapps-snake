@@ -33,10 +33,10 @@
   </head>
 <body>
   <canvas width="800" height="800" id="game"></canvas>
-  <button id="upBtn"></button>
-  <button id="downBtn"></button>
-  <button id="leftBtn"></button>
-  <button id="rightBn"></button>
+
+  <!-- Implement Hammer.JS for use in touch controls -->
+  <script scr="https://hammerjs.github.io/dist/hammer.js"></script>
+
   <script>
     var canvas = document.getElementById('game');
     var context = canvas.getContext('2d');
@@ -209,81 +209,40 @@
       });
     }
 
-    // listen to touch events to move stake
+    // Implement code for touch controls
+    var ti = new Hammer(canvas);
 
-    window.addEventListener('load', function(){
-    
-    var box1 = document.getElementById('game')
-    var startx = 0
-    var starty = 0
-    var endx = 0
-    var endy = 0
-    var dist = 0
+    // Instruct Hammer to support all directions
+    // Device should also stop scrolling
+    ti.get('pan').set({
+      direction: Hammer.DIRECTION_ALL });
 
-    box1.addEventListener('touchstart', function(e){
-        var touchobj = e.changedTouches[0] // reference first touch point (ie: first finger)
-        startx = parseInt(touchobj.clientX) // get x position of touch point relative to left edge of browser
-        starty = parseInt(touchobj.clientY)
-        e.preventDefault()
-    }, false)
-
-    box1.addEventListener('touchmove', function(e){
-        var touchobj = e.changedTouches[0] // reference first touch point for this event
-        var dist = parseInt(touchobj.clientX) - startx
-        e.preventDefault()
-    }, false)
-
-    box1.addEventListener('touchend', function(e){
-        var touchobj = e.changedTouches[0] // reference first touch point for this event
-
-
-        // Process the swipe motion
-        // Determine the difference between the start and end pos, for each axis
-
-        var difX = endx - startx;
-        var difY = endy - starty;
-        
-        if(Math.abs(difX) > Math.abs(difY) && snake.dx === 0){  // Swipe is on the X axis
-          if(difX > 0){ // Go right
-            snake.dx = grid;
-            snake.dy = 0;
-          }
-          if(difY < 0){ // Go left
-            snake.dx = -grid;
-            snake.dy = 0;
-          }
-        }
-
-        if(Math.abs(difY) > Math.abs(difX) && snake.dy === 0){  // Swipt is on the Y axis
-          if(difY > 0){ // Go down
-            snake.dy = grid;
-            snake.dx = 0;
-          }
-          if(difY < 0){ // Go Up
-            snake.dy = -grid;
-            snake.dx = 0;
-          }
-        }
-
-        /*
-        if(endx > startx){ // Right
-          snake.dx = grid;
-          snake.dy = 0;
-        }else if (endx < startx){ // Left
+    // Handle Hammer.JS Events now:
+    ti.on("panleft panright panup pandown", function(ev){
+      // Touch event logic goes here
+      switch(ev.type){
+        case 'panleft':
           snake.dx = -grid;
           snake.dy = 0;
-        }else if(endy > starty){ // Down
-          snake.dy = grid;
-          snake.dx = 0;
-        }else if (endy < starty){ // Up
+          break;
+
+        case 'panright':
+          snake.dx = grid;
+          snake.dy = 0;
+          break;
+
+        case 'panup':
           snake.dy = -grid;
           snake.dx = 0;
-        }*/
+          break;
 
-        e.preventDefault()
-    }, false)
+        case 'pandown':
+          snake.dy = grid;
+          snake.dx = 0;
+          break;
+      }
+    });
 
-    }, false)
 
     // Listen to keyboard events to move the snake
     document.addEventListener('keydown', function(e) {
