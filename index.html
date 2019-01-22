@@ -209,39 +209,42 @@
       });
     }
 
-    // Implement code for touch controls
-    var ti = new Hammer(canvas);
+    document.addEventListener('load', function(e) {
+      // Implement code for touch controls
+      var ti = new Hammer(canvas);
 
-    // Instruct Hammer to support all directions
-    // Device should also stop scrolling
-    ti.get('pan').set({
-      direction: Hammer.DIRECTION_ALL });
+      // Instruct Hammer to support all directions
+      // Device should also stop scrolling
+      ti.get('pan').set({
+        direction: Hammer.DIRECTION_ALL });
 
-    // Handle Hammer.JS Events now:
-    ti.on("panleft panright panup pandown", function(ev){
-      // Touch event logic goes here
-      switch(ev.type){
-        case 'panleft':
-          snake.dx = -grid;
-          snake.dy = 0;
-          break;
+      // Handle Hammer.JS Events now:
+      ti.on("panleft panright panup pandown", function(ev){
+        // Touch event logic goes here
+        switch(ev.type){
+          case 'panleft':
+            snake.dx = -grid;
+            snake.dy = 0;
+            break;
 
-        case 'panright':
-          snake.dx = grid;
-          snake.dy = 0;
-          break;
+          case 'panright':
+            snake.dx = grid;
+            snake.dy = 0;
+            break;
 
-        case 'panup':
-          snake.dy = -grid;
-          snake.dx = 0;
-          break;
+          case 'panup':
+            snake.dy = -grid;
+            snake.dx = 0;
+            break;
 
-        case 'pandown':
-          snake.dy = grid;
-          snake.dx = 0;
-          break;
-      }
+          case 'pandown':
+            snake.dy = grid;
+            snake.dx = 0;
+            break;
+        }
+      });
     });
+    
 
 
     // Listen to keyboard events to move the snake
